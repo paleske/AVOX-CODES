@@ -2,120 +2,148 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>AVOX CODES - Crash</title>
+<title>AVOX CODES</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#050508;color:white;font-family:Arial;padding-bottom:65px;overflow-x:hidden}
-.header{background:#12121f;padding:10px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222;position:relative}
-.menu-btn{background:0;border:0;color:#ffcc00;font-size:22px;font-weight:900;padding:5px 10px;cursor:pointer}
-.logo-center{position:absolute;left:50%;transform:translateX(-50%);color:#ffcc00;font-weight:900;font-size:15px}
-.deposit-btn{background:#000;color:#fff;border:1px solid #444;padding:8px 18px;border-radius:20px;font-weight:900;font-size:12px}
-.phase-btn{background:#222;color:#888;padding:8px 20px;border:0;border-radius:20px;font-weight:900;font-size:13px;width:48%}
-.phase-btn.active{background:#ffcc00;color:black}
-#game{height:55vh;background:#000000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-#codes{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5}
+*{box-sizing:border-box;margin:0;padding:0}body{background:#050508;color:white;font-family:Arial;padding-bottom:110px;overflow-x:hidden}
+.topbar{background:#0f0f1a;padding:14px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
+.topbar.left{color:#ffcc00;font-size:22px;font-weight:900}
+.topbar.center{color:#ffcc00;font-weight:900;font-size:15px;letter-spacing:1px}
+.topbar.right{color:#ffcc00;font-weight:900;font-size:14px}
+
+/* TABS REAL DEMO */
+.realDemo{display:flex;gap:10px;padding:12px}
+.realDemo button{flex:1;padding:12px;border:0;border-radius:25px;font-weight:900;font-size:14px;cursor:pointer}
+.realDemo.active{background:#ffcc00;color:#000}
+.realDemo.inactive{background:#222;color:#888}
+
+/* ACCOUNT CARD */
+.card{background:#1a1a2e;border-radius:20px;margin:0 12px;padding:22px;text-align:center;border:1px solid #2a2a40}
+.card.name{color:#888;font-size:13px;letter-spacing:1px;margin-bottom:8px}
+.card.balance{color:#ffcc00;font-size:32px;font-weight:900;margin-bottom:6px}
+.card.phone{color:#888;font-size:13px;margin-bottom:18px}
+.cardBtns{display:flex;gap:12px}
+.cardBtns button{flex:1;padding:14px;border:0;border-radius:14px;font-weight:900;font-size:14px;cursor:pointer}
+.btnDeposit{background:#ffcc00;color:#000}
+.btnWithdraw{background:#00c853;color:#fff}
+
+/* PROFIT CARD */
+.profitCard{background:#2b2110;border:1px solid #5a431a;border-radius:14px;margin:12px;padding:14px}
+.profitCard.label{color:#ddd;font-size:13px}
+.profitCard.value{color:#ffcc00;font-size:20px;font-weight:900}
+
+.logout{text-align:center;padding:20px;color:#888;font-size:13px;cursor:pointer}
+
+/* GAME AREA - FOR MARKET TAB */
+#gameWrap{display:none}
+#game{height:52vh;background:#000000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+#codes{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
 .code{position:absolute;font-weight:700;font-family:monospace;animation:moveUp linear forwards;white-space:nowrap}
-@keyframes moveUp{0%{transform:translateY(55vh);opacity:0}10%{opacity:1}90%{opacity:0.8}100%{transform:translateY(-80px);opacity:0}}
-#timer{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#ffcc00;color:black;padding:14px 32px;border-radius:30px;font-weight:900;font-size:22px;z-index:20;box-shadow:0 0 20px rgba(255,204,0,0.6)}
-#status{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#555;font-size:10px;letter-spacing:1px;z-index:10}
+@keyframes moveUp{0%{transform:translateY(55vh);opacity:0}10%{opacity:1}100%{transform:translateY(-80px);opacity:0}}
+#timer{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#ffcc00;color:black;padding:14px 32px;border-radius:30px;font-weight:900;font-size:22px;z-index:20}
+#status{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#555;font-size:10px}
 .bet-panel{display:flex;gap:8px;padding:8px;background:#151525;margin:6px 8px;border-radius:14px;border:1px solid #222;align-items:center}
-.bet-panel input{width:75px;background:#050508;border:1px solid #333;color:#ffcc00;border-radius:10px;padding:12px;text-align:center;font-weight:900;outline:none}
-.bet-btn{flex:1;padding:14px;border:0;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer}
+.bet-panel input{width:75px;background:#050508;border:1px solid #333;color:#ffcc00;border-radius:10px;padding:12px;text-align:center;font-weight:900}
+.bet-btn{flex:1;padding:14px;border:0;border-radius:12px;font-weight:900;font-size:15px}
 .bet-btn.bet{background:#ffcc00;color:#000}
 .bet-btn.cash{background:#00e701;color:#000}
 .bet-btn.wait{background:#333;color:#888}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#12121f;display:flex;border-top:1px solid #333;height:60px;z-index:50}
-.bottom button{flex:1;background:0;border:0;color:#888;padding:8px;font-size:11px;font-weight:700}
-.bottom button.active{color:#ffcc00;border-top:3px solid #ffcc00}
-#authOverlay{position:fixed;top:0;left:0;width:100%;height:100%;background:radial-gradient(circle at center, #0a0a1a 0%, #000 100%);z-index:100;display:flex;align-items:center;justify-content:center}
-.authBox{background:linear-gradient(145deg, #1a1a2e 0%, #0f0f1a 100%);border:2px solid #ffcc00;border-radius:24px;padding:35px 25px;width:92%;max-width:380px;text-align:center;box-shadow:0 0 50px rgba(255,204,0,0.4)}
-.authBox h2{color:#ffcc00;margin:0 0 5px;font-size:28px;letter-spacing:2px;text-shadow:0 0 15px #ffcc00}
-.authBox small{color:#aaa;font-size:12px}
-.tabs{display:flex;justify-content:center;gap:30px;margin:25px 0 15px;border-bottom:1px solid #333}
-.tabBtn{padding:12px 0;border:0;background:0;color:#666;font-weight:900;font-size:14px;position:relative;cursor:pointer}
-.tabBtn.active{color:#ffcc00}
-.tabBtn.active::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:3px;background:#ffcc00}
-.authBox input{width:100%;padding:16px;margin:10px 0;background:#0a0a0f;border:2px solid #333;border-radius:14px;color:white;font-size:15px;outline:none}
-.authBox input:focus{border-color:#ffcc00}
-.loginBtn{width:100%;padding:16px;background:#ffcc00;color:#000;border:0;border-radius:14px;font-weight:900;font-size:16px;margin-top:15px;cursor:pointer}
 .hist{display:flex;gap:6px;padding:8px;overflow-x:auto}
-.hist span{padding:5px 11px;border-radius:15px;font-size:11px;font-weight:800;white-space:nowrap;background:#1a1a2e;color:#ffcc00;border:1px solid #333}
+.hist span{padding:5px 11px;border-radius:15px;font-size:11px;font-weight:800;background:#1a1a2e;color:#ffcc00;border:1px solid #333}
+
+/* BOTTOM NAV - LIKE SCREENSHOT */
+.bottomNav{position:fixed;bottom:50px;left:0;right:0;background:#12121f;display:flex;border-top:1px solid #222;height:55px;z-index:60}
+.bottomNav button{flex:1;background:0;border:0;color:#666;font-size:11px;font-weight:700;cursor:pointer}
+.bottomNav button.active{color:#ffcc00;border-top:3px solid #ffcc00}
+.bottomNav2{position:fixed;bottom:0;left:0;right:0;background:#0a0a12;display:flex;height:50px;z-index:60;border-top:1px solid #111}
+.bottomNav2 button{flex:1;background:0;border:0;color:#888;font-size:10px;font-weight:700}
 </style>
 </head>
 <body>
 
-<div id="authOverlay">
-<div class="authBox">
-<h2>AVOX CODES</h2>
-<small>Physics & Math Engine</small>
-<div class="tabs"><button class="tabBtn active" id="loginTab" onclick="switchAuth('login')">LOGIN</button><button class="tabBtn" id="signupTab" onclick="switchAuth('signup')">SIGNUP</button></div>
-<div id="loginForm"><input placeholder="Phone"><input type="password" placeholder="Password"><button class="loginBtn" onclick="doLogin()">LOGIN</button></div>
-<div id="signupForm" style="display:none"><input placeholder="Phone"><input type="password" placeholder="Password"><input type="password" placeholder="Confirm"><button class="loginBtn" onclick="doSignup()">CREATE</button></div>
+<div class="topbar">
+<div class="left">⋮</div>
+<div class="center">AVOX CODES</div>
+<div class="right" id="topBal">KSh 187508</div>
+</div>
+
+<!-- ACCOUNT TAB - EXACTLY LIKE YOUR SCREENSHOT -->
+<div id="accountWrap">
+<div class="realDemo">
+<button class="active" onclick="setMode('real',this)">REAL</button>
+<button class="inactive" onclick="setMode('demo',this)">DEMO</button>
+</div>
+
+<div class="card">
+<div class="name">AMOS LAGAT</div>
+<div class="balance" id="bigBal">KSh 187508</div>
+<div class="phone">0713667827</div>
+<div class="cardBtns">
+<button class="btnDeposit">DEPOSIT</button>
+<button class="btnWithdraw">WITHDRAW</button>
 </div>
 </div>
 
-<div class="header">
-<button class="menu-btn">☰</button>
-<div class="logo-center">AVOX CODES</div>
-<button class="deposit-btn">Deposit</button>
+<div class="profitCard">
+<div class="label">My Profit (Your Admin Profit)</div>
+<div class="value">KSh 187408</div>
 </div>
 
-<div style="display:flex;gap:6px;padding:8px">
-<button class="phase-btn active">Phase 1</button>
-<button class="phase-btn">Phase 2</button>
+<div class="logout" onclick="alert('Logged out')">LOGOUT</div>
 </div>
 
+<!-- MARKET TAB - YOUR GAME WITH PHYSICS FORMULAS -->
+<div id="gameWrap">
 <div class="hist" id="hist"><span>2.14x</span><span>5.44x</span><span>12.45x</span></div>
-
 <div id="game">
 <div id="timer">5.0s</div>
 <div id="codes"></div>
 <div id="status">WAITING</div>
 </div>
-
 <div class="bet-panel">
-<input id="amt1" value="20">
-<button class="bet-btn bet" id="btn1" onclick="placeBet(1)">BET 20 KES</button>
-<button style="flex:0.35;background:#222;color:#fff;border:0;border-radius:12px;padding:14px" onclick="chgAmt(1,10)">+</button>
+<input id="amt1" value="20"><button class="bet-btn bet" id="btn1" onclick="placeBet(1)">BET 20 KES</button><button style="flex:0.35;background:#222;color:#fff;border:0;border-radius:12px;padding:14px" onclick="chgAmt(1,10)">+</button>
 </div>
 <div class="bet-panel">
-<input id="amt2" value="20">
-<button class="bet-btn bet" id="btn2" onclick="placeBet(2)">BET 20 KES</button>
-<button style="flex:0.35;background:#222;color:#fff;border:0;border-radius:12px;padding:14px" onclick="chgAmt(2,10)">+</button>
+<input id="amt2" value="20"><button class="bet-btn bet" id="btn2" onclick="placeBet(2)">BET 20 KES</button><button style="flex:0.35;background:#222;color:#fff;border:0;border-radius:12px;padding:14px" onclick="chgAmt(2,10)">+</button>
+</div>
 </div>
 
-<div class="bottom">
-<button class="active">🏠 Home</button>
-<button>📊 Stats</button>
-<button>💬 Chat</button>
-<button>👤 Me</button>
+<!-- BOTTOM NAV EXACT LIKE SCREENSHOT -->
+<div class="bottomNav">
+<button onclick="showTab('market',this)">📈<br>MARKET</button>
+<button class="active" onclick="showTab('account',this)">👤<br>ACCOUNT</button>
+</div>
+<div class="bottomNav2">
+<button>🔍<br>Download</button>
+<button>▶️<br>Play</button>
+<button>⚙️<br>Settings</button>
 </div>
 
 <script>
-let mult=1, crash=0, state='wait', timerInt=null, gameInt=null, spawnInt=null, betTimer=5, bets=[null,null], amounts=[20,20];
-let codesEl=document.getElementById('codes'), timerEl=document.getElementById('timer'), statusEl=document.getElementById('status'), histEl=document.getElementById('hist');
+let mode='real';
+function setMode(m,el){
+ document.querySelectorAll('.realDemo button').forEach(b=>b.className='inactive');
+ el.className='active';mode=m;
+}
+function showTab(t,el){
+ document.querySelectorAll('.bottomNav button').forEach(b=>b.classList.remove('active'));
+ el.classList.add('active');
+ document.getElementById('accountWrap').style.display=t=='account'?'block':'none';
+ document.getElementById('gameWrap').style.display=t=='market'?'block':'none';
+ if(t=='market' &&!window.gameStarted){startWaiting(); window.gameStarted=true;}
+}
 
-// MATH & PHYSICS ONLY - NO 1.30x, NO CODE/WIN/BTC
-const formulas=[
-"E=mc²","F=ma","a²+b²=c²","e^iπ+1=0","PV=nRT","KE=½mv²","PE=mgh","F=G·m₁m₂/r²",
-"λ=h/p","p=mv","v=dx/dt","a=d²x/dt²","∫f(x)dx","∑ 1/n²=π²/6","lim sinx/x=1",
-"∇·E=ρ/ε₀","iħ ∂ψ/∂t=Ĥψ","E=hf","c=λν","V=IR","P=VI","Q=mcΔT",
-"y=mx+b","x=-b±√(b²-4ac)/2a","sin²+cos²=1","a=v²/r","W=Fd cosθ","s=ut+½at²"
-];
-
+// GAME LOGIC - NO CENTER MULTIPLIER, CODES AFTER 5 SEC
+let mult=1,crash=0,state='wait',timerInt=null,gameInt=null,spawnInt=null,betTimer=5,bets=[null,null],amounts=[20,20];
+let codesEl=document.getElementById('codes'),timerEl=document.getElementById('timer'),statusEl=document.getElementById('status'),histEl=document.getElementById('hist');
+const formulas=["E=mc²","F=ma","a²+b²=c²","e^iπ+1=0","PV=nRT","KE=½mv²","PE=mgh","λ=h/p","p=mv","v=dx/dt","∫f(x)dx","∑ 1/n²=π²/6","∇·E=ρ/ε₀","iħ ∂ψ/∂t=Ĥψ","E=hf","V=IR","P=VI","Q=mcΔT","W=Fd cosθ","s=ut+½at²"];
 function spawnOne(){
  let d=document.createElement('div');d.className='code';d.innerText=formulas[Math.floor(Math.random()*formulas.length)];
- d.style.left=Math.random()*78+'%';d.style.fontSize=(11+Math.random()*8)+'px';
- d.style.opacity=0.6+Math.random()*0.4;d.style.animationDuration=(2+Math.random()*2.5)+'s';
- d.style.color=['#ffcc00','#ffdb4d','#00ff88','#00e5ff','#b07cff'][Math.floor(Math.random()*5)];
+ d.style.left=Math.random()*78+'%';d.style.fontSize=(11+Math.random()*8)+'px';d.style.opacity=0.6+Math.random()*0.4;
+ d.style.animationDuration=(2+Math.random()*2.5)+'s';d.style.color=['#ffcc00','#00ff88','#00e5ff','#b07cff'][Math.floor(Math.random()*4)];
  codesEl.appendChild(d);setTimeout(()=>d.remove(),4000);
 }
-function updateSpawnRate(){
- if(spawnInt) clearInterval(spawnInt);
- let rate=150;if(mult>2) rate=80;if(mult>4) rate=45;if(mult>7) rate=25;if(mult>15) rate=12;
- spawnInt=setInterval(spawnOne, rate);
-}
+function updateSpawnRate(){if(spawnInt) clearInterval(spawnInt);let rate=150;if(mult>2) rate=80;if(mult>4) rate=45;if(mult>7) rate=25;if(mult>15) rate=12;spawnInt=setInterval(spawnOne, rate);}
 function randCrash(){let r=Math.random();if(r<0.5)return 1+Math.random()*1.8;if(r<0.85)return 2+Math.random()*8;return 10+Math.random()*80;}
-
 function startWaiting(){
  state='wait';mult=1;betTimer=5;codesEl.innerHTML='';if(spawnInt) clearInterval(spawnInt);
  timerEl.style.display='block';timerEl.innerText=betTimer.toFixed(1)+'s';statusEl.innerText='WAITING FOR NEXT ROUND';
@@ -123,9 +151,7 @@ function startWaiting(){
  timerInt=setInterval(()=>{betTimer-=0.1;timerEl.innerText=betTimer.toFixed(1)+'s';if(betTimer<=0){clearInterval(timerInt);startFly();}},100);
 }
 function startFly(){
- state='fly';crash=randCrash();mult=1;timerEl.style.display='none';statusEl.innerText='FORMULAS FLYING...';
- // CODES START EXACTLY AFTER 5 SEC ENDS
- updateSpawnRate();
+ state='fly';crash=randCrash();mult=1;timerEl.style.display='none';statusEl.innerText='FORMULAS FLYING...';updateSpawnRate();
  [1,2].forEach(p=>{if(bets[p-1]&&!bets[p-1].cashed){document.getElementById('btn'+p).innerText='CASH '+(amounts[p-1]*mult).toFixed(2);document.getElementById('btn'+p).className='bet-btn cash';}});
  gameInt=setInterval(()=>{mult+=0.02+mult*0.025;if(mult>=crash){doCrash();return;}updateSpawnRate();[1,2].forEach(p=>{let i=p-1;if(bets[i]&&!bets[i].cashed){document.getElementById('btn'+p).innerText='CASH '+(amounts[i]*mult).toFixed(2);}});},50);
 }
@@ -137,9 +163,6 @@ function doCrash(){
 }
 function chgAmt(p,d){amounts[p-1]+=d;if(amounts[p-1]<10)amounts[p-1]=10;document.getElementById('amt'+p).value=amounts[p-1];if(!bets[p-1])document.getElementById('btn'+p).innerText='BET '+amounts[p-1]+' KES';}
 function placeBet(p){let i=p-1;if(state==='wait'){if(bets[i])return;bets[i]={amt:amounts[i],cashed:false};document.getElementById('btn'+p).innerText='WAITING...';document.getElementById('btn'+p).className='bet-btn wait';}else if(state==='fly'&&bets[i]&&!bets[i].cashed){let win=bets[i].amt*mult;bets[i].cashed=true;document.getElementById('btn'+p).innerText='WON '+win.toFixed(2);document.getElementById('btn'+p).className='bet-btn bet';}}
-function switchAuth(t){document.getElementById('loginTab').className=t=='login'?'tabBtn active':'tabBtn';document.getElementById('signupTab').className=t=='signup'?'tabBtn active':'tabBtn';document.getElementById('loginForm').style.display=t=='login'?'block':'none';document.getElementById('signupForm').style.display=t=='signup'?'block':'none';}
-function doLogin(){document.getElementById('authOverlay').style.display='none';startWaiting();}
-function doSignup(){doLogin();}
 </script>
 </body>
 </html>
