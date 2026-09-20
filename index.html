@@ -12,12 +12,12 @@
 .phase-wrap{display:flex;gap:6px;padding:8px}
 .phase-btn{background:#222;color:#888;padding:8px 20px;border:0;border-radius:20px;font-weight:900;font-size:13px;width:48%}
 .phase-btn.active{background:#ffcc00;color:black}
-#game{height:52vh;background:#000000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #111}
-#mult{font-size:70px;font-weight:900;color:#ffcc00;z-index:10;text-shadow:0 0 30px #ffcc00;font-family:monospace;letter-spacing:2px}
+#game{height:55vh;background:#000000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #111}
 #codes{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:5}
 .code{position:absolute;font-weight:700;font-family:monospace;animation:moveUp linear forwards;white-space:nowrap}
-@keyframes moveUp{0%{transform:translateY(55vh) translateX(0) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:0.8}100%{transform:translateY(-80px) translateX(20px) rotate(5deg);opacity:0}}
-#timer{position:absolute;top:15px;left:50%;transform:translateX(-50%);background:#ffcc00;color:black;padding:8px 22px;border-radius:20px;font-weight:900;font-size:18px;z-index:20}
+@keyframes moveUp{0%{transform:translateY(55vh) translateX(0);opacity:0}10%{opacity:1}90%{opacity:0.8}100%{transform:translateY(-80px) translateX(20px);opacity:0}}
+#timer{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#ffcc00;color:black;padding:14px 32px;border-radius:30px;font-weight:900;font-size:22px;z-index:20;box-shadow:0 0 20px rgba(255,204,0,0.6)}
+#status{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#666;font-size:11px;z-index:10;letter-spacing:1px}
 .bet-panel{display:flex;gap:8px;padding:10px;background:#151525;margin:6px 8px;border-radius:14px;border:1px solid #222;align-items:center}
 .bet-panel input{width:80px;background:#050508;border:1px solid #333;color:#ffcc00;border-radius:10px;padding:12px;text-align:center;font-weight:900;outline:none}
 .bet-btn{flex:1;padding:14px;border:0;border-radius:12px;font-weight:900;font-size:15px;cursor:pointer}
@@ -39,7 +39,6 @@
 .tabBtn.active{color:#ffcc00}
 .tabBtn.active::after{content:'';position:absolute;bottom:-1px;left:0;width:100%;height:3px;background:#ffcc00}
 .authBox input{width:100%;padding:16px;margin:10px 0;background:#0a0a0f;border:2px solid #333;border-radius:14px;color:white;font-size:15px;outline:none}
-.authBox input:focus{border-color:#ffcc00}
 .loginBtn{width:100%;padding:16px;background:#ffcc00;color:#000;border:0;border-radius:14px;font-weight:900;font-size:16px;margin-top:15px;cursor:pointer}
 </style>
 </head>
@@ -49,9 +48,9 @@
 <div class="authBox">
 <h2>AVOX CODES</h2>
 <small>Physics & Math Engine</small>
-<div class="tabs"><button class="tabBtn active" onclick="switchAuth('login')" id="loginTab">LOGIN</button><button class="tabBtn" onclick="switchAuth('signup')" id="signupTab">SIGNUP</button></div>
-<div id="loginForm"><input id="lPhone" placeholder="Phone / Username"><input id="lPass" type="password" placeholder="Password"><button class="loginBtn" onclick="doLogin()">LOGIN</button></div>
-<div id="signupForm" style="display:none"><input id="sPhone" placeholder="Phone"><input id="sPass" type="password" placeholder="Password"><input id="sPass2" type="password" placeholder="Confirm"><button class="loginBtn" onclick="doSignup()">CREATE ACCOUNT</button></div>
+<div class="tabs"><button class="tabBtn active" id="loginTab" onclick="switchAuth('login')">LOGIN</button><button class="tabBtn" id="signupTab" onclick="switchAuth('signup')">SIGNUP</button></div>
+<div id="loginForm"><input placeholder="Phone / Username"><input type="password" placeholder="Password"><button class="loginBtn" onclick="doLogin()">LOGIN</button></div>
+<div id="signupForm" style="display:none"><input placeholder="Phone"><input type="password" placeholder="Password"><input type="password" placeholder="Confirm"><button class="loginBtn" onclick="doSignup()">CREATE ACCOUNT</button></div>
 </div>
 </div>
 
@@ -71,7 +70,7 @@
 <div id="game">
 <div id="timer">5.0s</div>
 <div id="codes"></div>
-<div id="mult">1.00x</div>
+<div id="status">WAITING FOR NEXT ROUND</div>
 </div>
 
 <div class="bet-panel">
@@ -94,69 +93,78 @@
 
 <script>
 let mult=1, crash=0, state='wait', timerInt=null, gameInt=null, spawnInt=null, betTimer=5, bets=[null,null], amounts=[20,20];
-let codesEl=document.getElementById('codes'), multEl=document.getElementById('mult'), timerEl=document.getElementById('timer'), histEl=document.getElementById('hist');
+let codesEl=document.getElementById('codes'), timerEl=document.getElementById('timer'), statusEl=document.getElementById('status'), histEl=document.getElementById('hist');
 
-// PURE MATH & PHYSICS FORMULAS - 1.30x REMOVED
 const formulas=[
 "E=mc²","F=ma","a²+b²=c²","e^iπ+1=0","PV=nRT","KE=½mv²","PE=mgh","F=G·m₁m₂/r²",
 "λ=h/p","p=mv","v=dx/dt","a=d²x/dt²","∫f(x)dx","∑ₙ=1^∞ 1/n²=π²/6","lim x→0 sinx/x=1",
-"∇·E=ρ/ε₀","∇×B=μ₀J","iħ ∂ψ/∂t=Ĥψ","E=hf","c=λν","V=IR","P=VI","Q=mcΔT",
-"y=mx+b","x=-b±√(b²-4ac)/2a","sin²+cos²=1","d/dx xⁿ=nxⁿ⁻¹","∫0^∞ e^-x dx=1",
-"a=v²/r","F=q(E+v×B)","U=½ kx²","W=Fd cosθ","s=ut+½at²","v²=u²+2as"
+"∇·E=ρ/ε₀","iħ ∂ψ/∂t=Ĥψ","E=hf","c=λν","V=IR","P=VI","Q=mcΔT",
+"y=mx+b","x=-b±√(b²-4ac)/2a","sin²+cos²=1","a=v²/r","F=q(E+v×B)","W=Fd cosθ","s=ut+½at²"
 ];
 
 function spawnOne(){
  let d=document.createElement('div');
  d.className='code';
  d.innerText=formulas[Math.floor(Math.random()*formulas.length)];
- d.style.left=Math.random()*82+'%';
- d.style.fontSize=(10+Math.random()*7)+'px';
- d.style.opacity=0.4+Math.random()*0.6;
- d.style.animationDuration=(2.5+Math.random()*3)+'s';
+ d.style.left=Math.random()*78+'%';
+ d.style.fontSize=(11+Math.random()*9)+'px';
+ d.style.opacity=0.5+Math.random()*0.5;
+ d.style.animationDuration=(2+Math.random()*2.5)+'s';
  d.style.color=['#ffcc00','#ffdb4d','#00ff88','#00e5ff','#b07cff','#ffaa00'][Math.floor(Math.random()*6)];
  codesEl.appendChild(d);
- setTimeout(()=>d.remove(),4500);
+ setTimeout(()=>d.remove(),4000);
 }
 
 function updateSpawnRate(){
  if(spawnInt) clearInterval(spawnInt);
- let rate=180; // low mult = few formulas
- if(mult>1.5) rate=120;
- if(mult>2.5) rate=80;
- if(mult>4) rate=50;
- if(mult>7) rate=30;
- if(mult>12) rate=18;
- if(mult>25) rate=10; // high mult = MANY formulas flooding screen
+ let rate=160;
+ if(mult>2) rate=80;
+ if(mult>4) rate=45;
+ if(mult>7) rate=25;
+ if(mult>15) rate=12;
  spawnInt=setInterval(spawnOne, rate);
 }
 
 function randCrash(){let r=Math.random();if(r<0.5)return 1+Math.random()*1.8;if(r<0.85)return 2+Math.random()*8;return 10+Math.random()*80;}
 
 function startWaiting(){
- state='wait';mult=1;multEl.innerText='1.00x';multEl.style.color='#ffcc00';betTimer=5;codesEl.innerHTML='';
+ state='wait';mult=1;betTimer=5;codesEl.innerHTML='';
  if(spawnInt) clearInterval(spawnInt);
- timerEl.style.display='block';timerEl.innerText=betTimer.toFixed(1)+'s';
+ timerEl.style.display='block';
+ timerEl.innerText=betTimer.toFixed(1)+'s';
+ statusEl.innerText='WAITING FOR NEXT ROUND';
  [1,2].forEach(p=>{let i=p-1;if(bets[i]&&bets[i].cashed)bets[i]=null;if(!bets[i]){document.getElementById('btn'+p).innerText='BET '+amounts[i]+' KES';document.getElementById('btn'+p).className='bet-btn bet';}});
- for(let k=0;k<5;k++) spawnOne();
- timerInt=setInterval(()=>{betTimer-=0.1;timerEl.innerText=betTimer.toFixed(1)+'s';if(betTimer<=0){clearInterval(timerInt);startFly();}},100);
+ // NO CODES DURING 5 SECONDS - SCREEN IS EMPTY BLACK
+ timerInt=setInterval(()=>{
+  betTimer-=0.1;
+  timerEl.innerText=betTimer.toFixed(1)+'s';
+  if(betTimer<=0){clearInterval(timerInt);startFly();}
+ },100);
 }
+
 function startFly(){
- state='fly';crash=randCrash();mult=1;timerEl.style.display='none';updateSpawnRate();
+ state='fly';crash=randCrash();mult=1;
+ timerEl.style.display='none';
+ statusEl.innerText='FORMULAS FLYING...';
+ // CODES START MOVING EXACTLY NOW - AFTER 5 SECONDS END
+ updateSpawnRate();
  [1,2].forEach(p=>{if(bets[p-1]&&!bets[p-1].cashed){document.getElementById('btn'+p).innerText='CASH '+(amounts[p-1]*mult).toFixed(2);document.getElementById('btn'+p).className='bet-btn cash';}});
  gameInt=setInterval(()=>{
   mult+=0.02+mult*0.025;
   if(mult>=crash){doCrash();return;}
-  multEl.innerText=mult.toFixed(2)+'x';
   updateSpawnRate();
   [1,2].forEach(p=>{let i=p-1;if(bets[i]&&!bets[i].cashed){document.getElementById('btn'+p).innerText='CASH '+(amounts[i]*mult).toFixed(2);}});
  },50);
 }
+
 function doCrash(){
- clearInterval(gameInt);if(spawnInt) clearInterval(spawnInt);state='crash';multEl.innerText=crash.toFixed(2)+'x';multEl.style.color='#ff0000';
+ clearInterval(gameInt);if(spawnInt) clearInterval(spawnInt);state='crash';
+ statusEl.innerText='CRASHED AT '+crash.toFixed(2)+'x';
  let s=document.createElement('span');s.innerText=crash.toFixed(2)+'x';histEl.prepend(s);
- [1,2].forEach(p=>{let i=p-1;if(bets[i]&&!bets[i].cashed){document.getElementById('btn'+p).innerText='LOST '+crash.toFixed(2)+'x';document.getElementById('btn'+p).className='bet-btn wait';}});
+ [1,2].forEach(p=>{let i=p-1;if(bets[i]&&!bets[i].cashed){document.getElementById('btn'+p).innerText='LOST';document.getElementById('btn'+p).className='bet-btn wait';}});
  setTimeout(()=>{bets=[null,null];startWaiting();},2000);
 }
+
 function chgAmt(p,d){amounts[p-1]+=d;if(amounts[p-1]<10)amounts[p-1]=10;document.getElementById('amt'+p).value=amounts[p-1];if(!bets[p-1])document.getElementById('btn'+p).innerText='BET '+amounts[p-1]+' KES';}
 function placeBet(p){
  let i=p-1;
@@ -173,4 +181,4 @@ function doLogin(){document.getElementById('authOverlay').style.display='none';s
 function doSignup(){doLogin();}
 </script>
 </body>
-  </html>
+</html>
