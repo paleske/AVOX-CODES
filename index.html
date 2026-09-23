@@ -1,168 +1,4192 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<title>AVOX CODES</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOX CODE POS</title>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{background:#050508;color:white;font-family:Arial;padding-bottom:110px;overflow-x:hidden}
-.topbar{background:#0f0f1a;padding:14px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #222}
-.topbar.left{color:#ffcc00;font-size:22px;font-weight:900}
-.topbar.center{color:#ffcc00;font-weight:900;font-size:15px;letter-spacing:1px}
-.topbar.right{color:#ffcc00;font-weight:900;font-size:14px}
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
 
-/* TABS REAL DEMO */
-.realDemo{display:flex;gap:10px;padding:12px}
-.realDemo button{flex:1;padding:12px;border:0;border-radius:25px;font-weight:900;font-size:14px;cursor:pointer}
-.realDemo.active{background:#ffcc00;color:#000}
-.realDemo.inactive{background:#222;color:#888}
+body{
+    background:#f3f4f6;
+    color:#172033;
+    overflow:hidden;
+}
 
-/* ACCOUNT CARD */
-.card{background:#1a1a2e;border-radius:20px;margin:0 12px;padding:22px;text-align:center;border:1px solid #2a2a40}
-.card.name{color:#888;font-size:13px;letter-spacing:1px;margin-bottom:8px}
-.card.balance{color:#ffcc00;font-size:32px;font-weight:900;margin-bottom:6px}
-.card.phone{color:#888;font-size:13px;margin-bottom:18px}
-.cardBtns{display:flex;gap:12px}
-.cardBtns button{flex:1;padding:14px;border:0;border-radius:14px;font-weight:900;font-size:14px;cursor:pointer}
-.btnDeposit{background:#ffcc00;color:#000}
-.btnWithdraw{background:#00c853;color:#fff}
+button{
+    cursor:pointer;
+}
 
-/* PROFIT CARD */
-.profitCard{background:#2b2110;border:1px solid #5a431a;border-radius:14px;margin:12px;padding:14px}
-.profitCard.label{color:#ddd;font-size:13px}
-.profitCard.value{color:#ffcc00;font-size:20px;font-weight:900}
+.hidden{
+    display:none!important;
+}
 
-.logout{text-align:center;padding:20px;color:#888;font-size:13px;cursor:pointer}
+/* ================= LOGIN ================= */
 
-/* GAME AREA - FOR MARKET TAB */
-#gameWrap{display:none}
-#game{height:52vh;background:#000000;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-#codes{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none}
-.code{position:absolute;font-weight:700;font-family:monospace;animation:moveUp linear forwards;white-space:nowrap}
-@keyframes moveUp{0%{transform:translateY(55vh);opacity:0}10%{opacity:1}100%{transform:translateY(-80px);opacity:0}}
-#timer{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:#ffcc00;color:black;padding:14px 32px;border-radius:30px;font-weight:900;font-size:22px;z-index:20}
-#status{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);color:#555;font-size:10px}
-.bet-panel{display:flex;gap:8px;padding:8px;background:#151525;margin:6px 8px;border-radius:14px;border:1px solid #222;align-items:center}
-.bet-panel input{width:75px;background:#050508;border:1px solid #333;color:#ffcc00;border-radius:10px;padding:12px;text-align:center;font-weight:900}
-.bet-btn{flex:1;padding:14px;border:0;border-radius:12px;font-weight:900;font-size:15px}
-.bet-btn.bet{background:#ffcc00;color:#000}
-.bet-btn.cash{background:#00e701;color:#000}
-.bet-btn.wait{background:#333;color:#888}
-.hist{display:flex;gap:6px;padding:8px;overflow-x:auto}
-.hist span{padding:5px 11px;border-radius:15px;font-size:11px;font-weight:800;background:#1a1a2e;color:#ffcc00;border:1px solid #333}
+.login-screen{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#111827,#2563eb);
+    padding:20px;
+}
 
-/* BOTTOM NAV - LIKE SCREENSHOT */
-.bottomNav{position:fixed;bottom:50px;left:0;right:0;background:#12121f;display:flex;border-top:1px solid #222;height:55px;z-index:60}
-.bottomNav button{flex:1;background:0;border:0;color:#666;font-size:11px;font-weight:700;cursor:pointer}
-.bottomNav button.active{color:#ffcc00;border-top:3px solid #ffcc00}
-.bottomNav2{position:fixed;bottom:0;left:0;right:0;background:#0a0a12;display:flex;height:50px;z-index:60;border-top:1px solid #111}
-.bottomNav2 button{flex:1;background:0;border:0;color:#888;font-size:10px;font-weight:700}
+.login-box{
+    width:100%;
+    max-width:420px;
+    background:#fff;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 20px 50px rgba(0,0,0,.3);
+}
+
+.logo{
+    text-align:center;
+    font-size:34px;
+    font-weight:900;
+    color:#2563eb;
+}
+
+.logo-sub{
+    text-align:center;
+    color:#777;
+    margin:5px 0 25px;
+}
+
+.login-tabs{
+    display:flex;
+    gap:8px;
+    margin-bottom:20px;
+}
+
+.login-tabs button{
+    flex:1;
+    padding:12px;
+    border:0;
+    border-radius:8px;
+    background:#e5e7eb;
+}
+
+.login-tabs .active{
+    background:#2563eb;
+    color:#fff;
+}
+
+label{
+    display:block;
+    font-weight:bold;
+    margin:12px 0 6px;
+}
+
+input,
+select{
+    width:100%;
+    padding:12px;
+    border:1px solid #d1d5db;
+    border-radius:8px;
+    outline:none;
+}
+
+input:focus,
+select:focus{
+    border-color:#2563eb;
+}
+
+.primary-btn{
+    width:100%;
+    padding:13px;
+    border:0;
+    border-radius:8px;
+    background:#2563eb;
+    color:#fff;
+    font-weight:bold;
+    margin-top:16px;
+}
+
+.message{
+    text-align:center;
+    font-size:14px;
+    margin-top:10px;
+}
+
+/* ================= TOP BAR ================= */
+
+.topbar{
+    height:65px;
+    background:#111827;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 18px;
+}
+
+.brand{
+    font-size:23px;
+    font-weight:900;
+}
+
+.user-area{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.logout{
+    background:#dc2626;
+    color:#fff;
+    border:0;
+    padding:9px 13px;
+    border-radius:7px;
+}
+
+/* ================= ADMIN ================= */
+
+.admin-layout{
+    display:flex;
+    height:calc(100vh - 65px);
+}
+
+.sidebar{
+    width:210px;
+    background:#1f2937;
+    padding:12px;
+}
+
+.sidebar button{
+    width:100%;
+    padding:12px;
+    margin-bottom:7px;
+    border:0;
+    background:transparent;
+    color:#fff;
+    text-align:left;
+    border-radius:6px;
+}
+
+.sidebar button.active,
+.sidebar button:hover{
+    background:#2563eb;
+}
+
+.admin-content{
+    flex:1;
+    overflow:auto;
+    padding:20px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:12px;
+    margin:18px 0;
+}
+
+.card{
+    background:#fff;
+    padding:18px;
+    border-radius:10px;
+}
+
+.card-title{
+    color:#777;
+    font-size:13px;
+}
+
+.card-value{
+    font-size:26px;
+    font-weight:bold;
+    margin-top:6px;
+}
+
+.section{
+    background:#fff;
+    padding:18px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
+    gap:10px;
+}
+
+.table-wrap{
+    overflow:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:12px;
+}
+
+th,
+td{
+    padding:10px;
+    border-bottom:1px solid #eee;
+    text-align:left;
+}
+
+th{
+    background:#f3f4f6;
+}
+
+.small-btn{
+    border:0;
+    padding:6px 9px;
+    border-radius:5px;
+    background:#2563eb;
+    color:#fff;
+}
+
+.delete-btn{
+    background:#dc2626;
+}
+
+/* ================= POS ================= */
+
+.employee-main{
+    height:calc(100vh - 65px);
+    padding:12px;
+    overflow:hidden;
+}
+
+.pos-layout{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 370px;
+    gap:12px;
+    height:calc(100vh - 105px);
+}
+
+.products-area{
+    min-width:0;
+    height:100%;
+    overflow-y:auto;
+    overflow-x:hidden;
+    padding-right:5px;
+}
+
+.pos-top{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:#f3f4f6;
+    padding-bottom:8px;
+}
+
+/* scanner */
+
+.scanner-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:8px;
+    margin-bottom:8px;
+}
+
+.scanner-input{
+    height:40px;
+}
+
+.scan-btn{
+    height:40px;
+    border:0;
+    border-radius:7px;
+    background:#111827;
+    color:#fff;
+    padding:0 14px;
+    font-weight:bold;
+}
+
+.pos-controls{
+    display:grid;
+    grid-template-columns:minmax(120px,1fr) 125px;
+    gap:8px;
+}
+
+.search-box input{
+    height:40px;
+}
+
+.top-complete-btn{
+    height:40px;
+    border:0;
+    border-radius:7px;
+    background:#16a34a;
+    color:#fff;
+    font-weight:bold;
+    font-size:12px;
+}
+
+.categories{
+    display:flex;
+    gap:7px;
+    overflow-x:auto;
+    padding:8px 0;
+}
+
+.category-btn{
+    white-space:nowrap;
+    border:0;
+    padding:7px 12px;
+    border-radius:18px;
+    background:#e5e7eb;
+    font-size:12px;
+}
+
+.category-btn.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+.product-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
+    gap:10px;
+}
+
+.product-card{
+    background:#fff;
+    border:1px solid #e5e7eb;
+    border-radius:10px;
+    padding:12px;
+}
+
+.product-name{
+    font-weight:bold;
+    min-height:36px;
+    font-size:14px;
+}
+
+.product-category{
+    color:#777;
+    font-size:11px;
+    margin:5px 0;
+}
+
+.product-price{
+    color:#16a34a;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.product-barcode{
+    color:#888;
+    font-size:10px;
+    margin-top:3px;
+}
+
+.stock{
+    color:#777;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.add-product{
+    width:100%;
+    border:0;
+    background:#2563eb;
+    color:#fff;
+    padding:8px;
+    border-radius:6px;
+    margin-top:8px;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.add-product:disabled{
+    background:#999;
+}
+
+/* ================= CART ================= */
+
+.cart-panel{
+    height:100%;
+    background:#fff;
+    border-radius:11px;
+    padding:15px;
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+
+.cart-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.cart-list{
+    flex:1;
+    min-height:0;
+    overflow-y:auto;
+    margin-top:8px;
+}
+
+.empty-cart{
+    text-align:center;
+    color:#777;
+    padding:30px 5px;
+}
+
+.cart-item{
+    padding:10px 0;
+    border-bottom:1px solid #eee;
+}
+
+.cart-item-top{
+    display:flex;
+    justify-content:space-between;
+    gap:5px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.qty-row{
+    display:flex;
+    align-items:center;
+    gap:7px;
+    margin-top:7px;
+}
+
+.qty-btn{
+    width:27px;
+    height:27px;
+    border:0;
+    border-radius:5px;
+    background:#e5e7eb;
+}
+
+.remove-btn{
+    margin-left:auto;
+    border:0;
+    background:#fee2e2;
+    color:#dc2626;
+    padding:6px 8px;
+    border-radius:5px;
+    font-size:11px;
+}
+
+.sale-bottom{
+    flex-shrink:0;
+    border-top:2px solid #eee;
+    padding-top:10px;
+}
+
+.total-row{
+    display:flex;
+    justify-content:space-between;
+    font-size:21px;
+    font-weight:bold;
+    margin-bottom:10px;
+}
+
+.payment-title{
+    font-weight:bold;
+    font-size:13px;
+    margin-bottom:6px;
+}
+
+.payment-methods{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+}
+
+.payment-method{
+    padding:9px 3px;
+    border:1px solid #d1d5db;
+    background:#fff;
+    border-radius:6px;
+    font-size:11px;
+}
+
+.payment-method.active{
+    background:#2563eb;
+    color:#fff;
+}
+
+.payment-extra{
+    margin-top:7px;
+}
+
+.payment-extra input{
+    padding:9px;
+    font-size:12px;
+}
+
+.bottom-complete{
+    width:100%;
+    padding:12px;
+    border:0;
+    border-radius:7px;
+    background:#16a34a;
+    color:#fff;
+    font-weight:bold;
+    margin-top:8px;
+}
+
+/* ================= RECEIPT ================= */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+    z-index:100;
+}
+
+.receipt{
+    background:#fff;
+    width:100%;
+    max-width:390px;
+    max-height:90vh;
+    overflow:auto;
+    border-radius:10px;
+    padding:22px;
+}
+
+.receipt-header{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.store-name{
+    font-size:24px;
+    font-weight:900;
+    margin-bottom:5px;
+}
+
+.vox-name{
+    font-size:11px;
+    color:#777;
+    margin-bottom:10px;
+}
+
+.receipt-line{
+    display:flex;
+    justify-content:space-between;
+    padding:6px 0;
+    gap:10px;
+}
+
+.receipt-total{
+    border-top:2px solid #111;
+    margin-top:8px;
+    padding-top:8px;
+    font-weight:bold;
+}
+
+.receipt-buttons{
+    display:flex;
+    gap:8px;
+    margin-top:15px;
+}
+
+.receipt-buttons button{
+    flex:1;
+    padding:11px;
+    border:0;
+    border-radius:6px;
+}
+
+.close-receipt{
+    background:#e5e7eb;
+}
+
+.print-receipt{
+    background:#2563eb;
+    color:#fff;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:800px){
+
+    .pos-layout{
+        grid-template-columns:1fr;
+        height:calc(100vh - 105px);
+    }
+
+    .products-area{
+        height:52vh;
+    }
+
+    .cart-panel{
+        height:42vh;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .sidebar{
+        width:170px;
+    }
+}
+
+@media(max-width:500px){
+
+    .brand{
+        font-size:18px;
+    }
+
+    .sidebar{
+        width:145px;
+    }
+
+    .sidebar button{
+        font-size:12px;
+    }
+
+    .product-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
 </style>
 </head>
+
 <body>
 
-<div class="topbar">
-<div class="left">⋮</div>
-<div class="center">AVOX CODES</div>
-<div class="right" id="topBal">KSh 187508</div>
+<!-- =========================================================
+     LOGIN
+========================================================= -->
+
+<div id="loginScreen" class="login-screen">
+
+<div class="login-box">
+
+<div class="logo">VOX CODE</div>
+
+<div class="logo-sub">
+Point of Sale System
 </div>
 
-<!-- ACCOUNT TAB - EXACTLY LIKE YOUR SCREENSHOT -->
-<div id="accountWrap">
-<div class="realDemo">
-<button class="active" onclick="setMode('real',this)">REAL</button>
-<button class="inactive" onclick="setMode('demo',this)">DEMO</button>
+<div class="login-tabs">
+
+<button id="adminTab"
+class="active"
+onclick="switchLogin('admin')">
+Admin
+</button>
+
+<button id="employeeTab"
+onclick="switchLogin('employee')">
+Employee
+</button>
+
+</div>
+
+
+<!-- ADMIN LOGIN -->
+
+<div id="adminLogin">
+
+<h2>Admin Sign In</h2>
+
+<label>Email</label>
+
+<input id="adminEmail"
+type="email"
+placeholder="Admin email">
+
+<label>Password</label>
+
+<input id="adminPassword"
+type="password"
+placeholder="Password">
+
+<button class="primary-btn"
+onclick="adminLogin()">
+Sign In
+</button>
+
+<p class="message">
+
+<button onclick="showSignup()"
+style="border:0;background:none;color:#2563eb;">
+Create account
+</button>
+
+</p>
+
+<div id="adminMessage"
+class="message"></div>
+
+</div>
+
+
+<!-- ADMIN SIGNUP -->
+
+<div id="adminSignup"
+class="hidden">
+
+<h2>Create Admin</h2>
+
+<label>Name</label>
+
+<input id="adminName"
+placeholder="Admin name">
+
+<label>Email</label>
+
+<input id="signupEmail"
+type="email"
+placeholder="Email">
+
+<label>Password</label>
+
+<input id="signupPassword"
+type="password"
+placeholder="Password">
+
+<label>Confirm Password</label>
+
+<input id="signupPassword2"
+type="password"
+placeholder="Confirm password">
+
+<button class="primary-btn"
+onclick="createAdmin()">
+Create Admin
+</button>
+
+<p class="message">
+
+<button onclick="showLogin()"
+style="border:0;background:none;color:#2563eb;">
+Back to login
+</button>
+
+</p>
+
+<div id="signupMessage"
+class="message"></div>
+
+</div>
+
+
+<!-- EMPLOYEE LOGIN -->
+
+<div id="employeeLogin"
+class="hidden">
+
+<h2>Employee Sign In</h2>
+
+<label>Username</label>
+
+<input id="employeeUsername"
+placeholder="Username">
+
+<label>Password</label>
+
+<input id="employeePassword"
+type="password"
+placeholder="Password">
+
+<button class="primary-btn"
+onclick="employeeLogin()">
+Sign In
+</button>
+
+<div id="employeeMessage"
+class="message"></div>
+
+</div>
+
+</div>
+</div>
+
+
+<!-- =========================================================
+     ADMIN DASHBOARD
+========================================================= -->
+
+<div id="adminDashboard" class="hidden">
+
+<div class="topbar">
+
+<div class="brand">
+VOX CODE
+</div>
+
+<div class="user-area">
+
+<span id="adminUser"></span>
+
+<button class="logout"
+onclick="logout()">
+Logout
+</button>
+
+</div>
+
+</div>
+
+
+<div class="admin-layout">
+
+<div class="sidebar">
+
+<button class="active"
+onclick="adminPage('dashboard',this)">
+Dashboard
+</button>
+
+<button onclick="adminPage('employees',this)">
+Employees
+</button>
+
+<button onclick="adminPage('products',this)">
+Products
+</button>
+
+<button onclick="adminPage('sales',this)">
+Sales
+</button>
+
+<button onclick="adminPage('reports',this)">
+Reports
+</button>
+
+<button onclick="adminPage('settings',this)">
+Store Settings
+</button>
+
+</div>
+
+
+<div class="admin-content">
+
+
+<!-- DASHBOARD -->
+
+<div id="dashboardPage">
+
+<h1>Dashboard</h1>
+
+<div class="cards">
+
+<div class="card">
+<div class="card-title">Employees</div>
+<div id="employeeCount" class="card-value">0</div>
 </div>
 
 <div class="card">
-<div class="name">AMOS LAGAT</div>
-<div class="balance" id="bigBal">KSh 187508</div>
-<div class="phone">0713667827</div>
-<div class="cardBtns">
-<button class="btnDeposit">DEPOSIT</button>
-<button class="btnWithdraw">WITHDRAW</button>
+<div class="card-title">Products</div>
+<div id="productCount" class="card-value">0</div>
+</div>
+
+<div class="card">
+<div class="card-title">Sales</div>
+<div id="saleCount" class="card-value">0</div>
+</div>
+
+<div class="card">
+<div class="card-title">Revenue</div>
+<div id="revenue" class="card-value">KSh 0</div>
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Recent Sales</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Employee</th>
+<th>Payment</th>
+<th>Total</th>
+<th>Date</th>
+</tr>
+
+</thead>
+
+<tbody id="recentSales"></tbody>
+
+</table>
+
 </div>
 </div>
 
-<div class="profitCard">
-<div class="label">My Profit (Your Admin Profit)</div>
-<div class="value">KSh 187408</div>
 </div>
 
-<div class="logout" onclick="alert('Logged out')">LOGOUT</div>
+
+<!-- EMPLOYEES -->
+
+<div id="employeesPage" class="hidden">
+
+<h1>Employees</h1>
+
+<div class="section">
+
+<h2>Create Employee</h2>
+
+<div class="form-grid">
+
+<div>
+<label>Full Name</label>
+<input id="employeeName">
 </div>
 
-<!-- MARKET TAB - YOUR GAME WITH PHYSICS FORMULAS -->
-<div id="gameWrap">
-<div class="hist" id="hist"><span>2.14x</span><span>5.44x</span><span>12.45x</span></div>
-<div id="game">
-<div id="timer">5.0s</div>
-<div id="codes"></div>
-<div id="status">WAITING</div>
+<div>
+<label>Username</label>
+<input id="newUsername">
 </div>
-<div class="bet-panel">
-<input id="amt1" value="20"><button class="bet-btn bet" id="btn1" onclick="placeBet(1)">BET 20 KES</button><button style="flex:0.35;background:#222;color:#fff;border:0;border-radius:12px;padding:14px" onclick="chgAmt(1,10)">+</button>
+
+<div>
+<label>Password</label>
+<input id="newPassword"
+type="password">
 </div>
-<div class="bet-panel">
-<input id="amt2" value="20"><button class="bet-btn bet" id="btn2" onclick="placeBet(2)">BET 20 KES</button><button style="flex:0.35;background:#222;color:#fff;border:0;border-radius:12px;padding:14px" onclick="chgAmt(2,10)">+</button>
+
+</div>
+
+<button class="primary-btn"
+onclick="addEmployee()">
+Create Employee
+</button>
+
+<div id="employeeCreateMessage"
+class="message"></div>
+
+</div>
+
+<div class="section">
+
+<h2>Employee Accounts</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Name</th>
+<th>Username</th>
+<th>Sales</th>
+<th>Action</th>
+</tr>
+
+</thead>
+
+<tbody id="employeesTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- PRODUCTS -->
+
+<div id="productsPage" class="hidden">
+
+<h1>Products</h1>
+
+<div class="section">
+
+<h2>Add Product</h2>
+
+<div class="form-grid">
+
+<div>
+<label>Product Name</label>
+<input id="newProductName">
+</div>
+
+<div>
+<label>Barcode</label>
+<input id="newProductBarcode"
+placeholder="Scan or type barcode">
+</div>
+
+<div>
+<label>Category</label>
+<input id="newProductCategory">
+</div>
+
+<div>
+<label>Price</label>
+<input id="newProductPrice"
+type="number">
+</div>
+
+<div>
+<label>Stock</label>
+<input id="newProductStock"
+type="number">
+</div>
+
+</div>
+
+<button class="primary-btn"
+onclick="addProduct()">
+Add Product
+</button>
+
+</div>
+
+<div class="section">
+
+<h2>Inventory</h2>
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Product</th>
+<th>Barcode</th>
+<th>Category</th>
+<th>Price</th>
+<th>Stock</th>
+</tr>
+
+</thead>
+
+<tbody id="productsTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- SALES -->
+
+<div id="salesPage" class="hidden">
+
+<h1>Sales History</h1>
+
+<div class="section">
+
+<div class="table-wrap">
+
+<table>
+
+<thead>
+
+<tr>
+<th>Receipt</th>
+<th>Employee</th>
+<th>Payment</th>
+<th>Total</th>
+<th>Date</th>
+</tr>
+
+</thead>
+
+<tbody id="salesTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- REPORTS -->
+
+<div id="reportsPage" class="hidden">
+
+<h1>Reports</h1>
+
+<div class="cards">
+
+<div class="card">
+
+<div class="card-title">
+Transactions
+</div>
+
+<div id="reportTransactions"
+class="card-value">
+0
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-title">
+Total Revenue
+</div>
+
+<div id="reportRevenue"
+class="card-value">
+KSh 0
+</div>
+
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>Employee Performance</h2>
+
+<table>
+
+<thead>
+
+<tr>
+<th>Employee</th>
+<th>Sales</th>
+<th>Revenue</th>
+</tr>
+
+</thead>
+
+<tbody id="reportTable"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<!-- STORE SETTINGS -->
+
+<div id="settingsPage" class="hidden">
+
+<h1>Store Settings</h1>
+
+<div class="section">
+
+<h2>Store Information</h2>
+
+<label>Store Name</label>
+
+<input
+id="storeNameInput"
+placeholder="Enter your store name">
+
+<button
+class="primary-btn"
+onclick="saveStoreSettings()">
+Save Store Name
+</button>
+
+<div id="storeMessage"
+class="message"></div>
+
+</div>
+
+
+<!-- PRINTER INFORMATION -->
+
+<div class="section">
+
+<h2>Receipt Printer</h2>
+
+<p style="color:#666;line-height:1.5;">
+
+Connect your receipt printer to your Android device
+using a supported USB, Bluetooth or network connection.
+When you press <b>Print Receipt</b>, the Android/browser
+print screen will open so you can select the available
+printer.
+
+</p>
+
+<button
+class="primary-btn"
+onclick="testPrint()">
+Test Printer
+</button>
+
+</div>
+
+</div>
+
+</div>
 </div>
 </div>
 
-<!-- BOTTOM NAV EXACT LIKE SCREENSHOT -->
-<div class="bottomNav">
-<button onclick="showTab('market',this)">📈<br>MARKET</button>
-<button class="active" onclick="showTab('account',this)">👤<br>ACCOUNT</button>
+
+<!-- =========================================================
+     EMPLOYEE POS
+========================================================= -->
+
+<div id="employeeDashboard" class="hidden">
+
+<div class="topbar">
+
+<div class="brand">
+VOX CODE POS
 </div>
-<div class="bottomNav2">
-<button>🔍<br>Download</button>
-<button>▶️<br>Play</button>
-<button>⚙️<br>Settings</button>
+
+<div class="user-area">
+
+<span id="employeeUser"></span>
+
+<button class="logout"
+onclick="logout()">
+Logout
+</button>
+
 </div>
+
+</div>
+
+
+<div class="employee-main">
+
+<div class="pos-layout">
+
+
+<!-- PRODUCTS -->
+
+<div class="products-area">
+
+<div class="pos-top">
+
+
+<!-- BARCODE SCANNER -->
+
+<div class="scanner-row">
+
+<input
+id="barcodeInput"
+class="scanner-input"
+placeholder="🔎 Scan barcode here..."
+autocomplete="off">
+
+<button
+class="scan-btn"
+onclick="scanBarcode()">
+SCAN
+</button>
+
+</div>
+
+
+<!-- SEARCH + COMPLETE SALE -->
+
+<div class="pos-controls">
+
+<div class="search-box">
+
+<input
+id="searchInput"
+placeholder="🔎 Search products..."
+oninput="renderPOSProducts()">
+
+</div>
+
+<button
+class="top-complete-btn"
+onclick="completeSale()">
+
+COMPLETE SALE
+
+</button>
+
+</div>
+
+
+<div id="categories"
+class="categories">
+</div>
+
+</div>
+
+
+<div id="posProducts"
+class="product-grid">
+</div>
+
+</div>
+
+
+<!-- CART -->
+
+<div class="cart-panel">
+
+<div class="cart-heading">
+
+<h2>🛒 Cart</h2>
+
+<span id="cartCount">
+0 items
+</span>
+
+</div>
+
+
+<div id="cartList"
+class="cart-list">
+</div>
+
+
+<div class="sale-bottom">
+
+<div class="total-row">
+
+<span>Total</span>
+
+<span id="total">
+KSh 0
+</span>
+
+</div>
+
+
+<div class="payment-title">
+Payment Method
+</div>
+
+
+<div class="payment-methods">
+
+<button
+id="cashBtn"
+class="payment-method active"
+onclick="selectPayment('Cash')">
+
+💵 CASH
+
+</button>
+
+<button
+id="mpesaBtn"
+class="payment-method"
+onclick="selectPayment('M-Pesa')">
+
+📱 M-PESA
+
+</button>
+
+<button
+id="cardBtn"
+class="payment-method"
+onclick="selectPayment('Card')">
+
+💳 CARD
+
+</button>
+
+</div>
+
+
+<div id="paymentExtra"
+class="payment-extra">
+</div>
+
+
+<button
+class="bottom-complete"
+onclick="completeSale()">
+
+COMPLETE SALE
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- =========================================================
+     RECEIPT
+========================================================= -->
+
+<div id="receiptModal"
+class="modal hidden">
+
+<div class="receipt">
+
+<div class="receipt-header">
+
+<div id="receiptStoreName"
+class="store-name">
+MY STORE
+</div>
+
+<div class="vox-name">
+Powered by VOX CODE POS
+</div>
+
+<hr><br>
+
+<h3>
+SALES RECEIPT
+</h3>
+
+<p id="receiptNo"></p>
+
+<p id="receiptDate"></p>
+
+</div>
+
+
+<div id="receiptItems">
+</div>
+
+
+<div class="receipt-total">
+
+<div class="receipt-line">
+
+<span>
+Total
+</span>
+
+<span id="receiptAmount">
+</span>
+
+</div>
+
+
+<div class="receipt-line">
+
+<span>
+Payment
+</span>
+
+<span id="receiptMethod">
+</span>
+
+</div>
+
+</div>
+
+
+<div class="receipt-buttons">
+
+<button
+class="close-receipt"
+onclick="closeReceipt()">
+
+Close
+
+</button>
+
+<button
+class="print-receipt"
+onclick="printReceipt()">
+
+🖨️ Print Receipt
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
 
 <script>
-let mode='real';
-function setMode(m,el){
- document.querySelectorAll('.realDemo button').forEach(b=>b.className='inactive');
- el.className='active';mode=m;
-}
-function showTab(t,el){
- document.querySelectorAll('.bottomNav button').forEach(b=>b.classList.remove('active'));
- el.classList.add('active');
- document.getElementById('accountWrap').style.display=t=='account'?'block':'none';
- document.getElementById('gameWrap').style.display=t=='market'?'block':'none';
- if(t=='market' &&!window.gameStarted){startWaiting(); window.gameStarted=true;}
+
+/* =========================================================
+   DATA / STORAGE
+========================================================= */
+
+function getData(key,fallback){
+
+    try{
+
+        const data=localStorage.getItem(key);
+
+        return data
+            ?JSON.parse(data)
+            :fallback;
+
+    }catch(e){
+
+        return fallback;
+
+    }
+
 }
 
-// GAME LOGIC - NO CENTER MULTIPLIER, CODES AFTER 5 SEC
-let mult=1,crash=0,state='wait',timerInt=null,gameInt=null,spawnInt=null,betTimer=5,bets=[null,null],amounts=[20,20];
-let codesEl=document.getElementById('codes'),timerEl=document.getElementById('timer'),statusEl=document.getElementById('status'),histEl=document.getElementById('hist');
-const formulas=["E=mc²","F=ma","a²+b²=c²","e^iπ+1=0","PV=nRT","KE=½mv²","PE=mgh","λ=h/p","p=mv","v=dx/dt","∫f(x)dx","∑ 1/n²=π²/6","∇·E=ρ/ε₀","iħ ∂ψ/∂t=Ĥψ","E=hf","V=IR","P=VI","Q=mcΔT","W=Fd cosθ","s=ut+½at²"];
-function spawnOne(){
- let d=document.createElement('div');d.className='code';d.innerText=formulas[Math.floor(Math.random()*formulas.length)];
- d.style.left=Math.random()*78+'%';d.style.fontSize=(11+Math.random()*8)+'px';d.style.opacity=0.6+Math.random()*0.4;
- d.style.animationDuration=(2+Math.random()*2.5)+'s';d.style.color=['#ffcc00','#00ff88','#00e5ff','#b07cff'][Math.floor(Math.random()*4)];
- codesEl.appendChild(d);setTimeout(()=>d.remove(),4000);
+function saveData(key,data){
+
+    localStorage.setItem(
+        key,
+        JSON.stringify(data)
+    );
+
 }
-function updateSpawnRate(){if(spawnInt) clearInterval(spawnInt);let rate=150;if(mult>2) rate=80;if(mult>4) rate=45;if(mult>7) rate=25;if(mult>15) rate=12;spawnInt=setInterval(spawnOne, rate);}
-function randCrash(){let r=Math.random();if(r<0.5)return 1+Math.random()*1.8;if(r<0.85)return 2+Math.random()*8;return 10+Math.random()*80;}
-function startWaiting(){
- state='wait';mult=1;betTimer=5;codesEl.innerHTML='';if(spawnInt) clearInterval(spawnInt);
- timerEl.style.display='block';timerEl.innerText=betTimer.toFixed(1)+'s';statusEl.innerText='WAITING FOR NEXT ROUND';
- [1,2].forEach(p=>{let i=p-1;if(bets[i]&&bets[i].cashed)bets[i]=null;if(!bets[i]){document.getElementById('btn'+p).innerText='BET '+amounts[i]+' KES';document.getElementById('btn'+p).className='bet-btn bet';}});
- timerInt=setInterval(()=>{betTimer-=0.1;timerEl.innerText=betTimer.toFixed(1)+'s';if(betTimer<=0){clearInterval(timerInt);startFly();}},100);
+
+
+/* =========================================================
+   STORE NAME
+========================================================= */
+
+if(!localStorage.getItem("voxStoreName")){
+
+    localStorage.setItem(
+        "voxStoreName",
+        "MY STORE"
+    );
+
 }
-function startFly(){
- state='fly';crash=randCrash();mult=1;timerEl.style.display='none';statusEl.innerText='FORMULAS FLYING...';updateSpawnRate();
- [1,2].forEach(p=>{if(bets[p-1]&&!bets[p-1].cashed){document.getElementById('btn'+p).innerText='CASH '+(amounts[p-1]*mult).toFixed(2);document.getElementById('btn'+p).className='bet-btn cash';}});
- gameInt=setInterval(()=>{mult+=0.02+mult*0.025;if(mult>=crash){doCrash();return;}updateSpawnRate();[1,2].forEach(p=>{let i=p-1;if(bets[i]&&!bets[i].cashed){document.getElementById('btn'+p).innerText='CASH '+(amounts[i]*mult).toFixed(2);}});},50);
+
+
+/* =========================================================
+   DEFAULT PRODUCTS
+========================================================= */
+
+function initializeProducts(){
+
+    if(localStorage.getItem("voxProducts")){
+        return;
+    }
+
+    const products=[
+
+        {
+            id:1,
+            name:"Milk 500ml",
+            barcode:"616110001001",
+            category:"Dairy",
+            price:70,
+            stock:100
+        },
+
+        {
+            id:2,
+            name:"Milk 1L",
+            barcode:"616110001002",
+            category:"Dairy",
+            price:120,
+            stock:100
+        },
+
+        {
+            id:3,
+            name:"Bread 400g",
+            barcode:"616110001003",
+            category:"Bakery",
+            price:65,
+            stock:100
+        },
+
+        {
+            id:4,
+            name:"Sugar 1kg",
+            barcode:"616110001004",
+            category:"Groceries",
+            price:160,
+            stock:100
+        },
+
+        {
+            id:5,
+            name:"Rice 1kg",
+            barcode:"616110001005",
+            category:"Groceries",
+            price:180,
+            stock:100
+        },
+
+        {
+            id:6,
+            name:"Cooking Oil 1L",
+            barcode:"616110001006",
+            category:"Groceries",
+            price:250,
+            stock:100
+        },
+
+        {
+            id:7,
+            name:"Water 500ml",
+            barcode:"616110001007",
+            category:"Beverages",
+            price:50,
+            stock:100
+        },
+
+        {
+            id:8,
+            name:"Juice 1L",
+            barcode:"616110001008",
+            category:"Beverages",
+            price:180,
+            stock:100
+        },
+
+        {
+            id:9,
+            name:"Biscuits",
+            barcode:"616110001009",
+            category:"Snacks",
+            price:80,
+            stock:100
+        },
+
+        {
+            id:10,
+            name:"Soap",
+            barcode:"616110001010",
+            category:"Personal Care",
+            price:100,
+            stock:100
+        }
+
+    ];
+
+    saveData(
+        "voxProducts",
+        products
+    );
+
 }
-function doCrash(){
- clearInterval(gameInt);if(spawnInt) clearInterval(spawnInt);state='crash';statusEl.innerText='CRASHED AT '+crash.toFixed(2)+'x';
- let s=document.createElement('span');s.innerText=crash.toFixed(2)+'x';histEl.prepend(s);
- [1,2].forEach(p=>{let i=p-1;if(bets[i]&&!bets[i].cashed){document.getElementById('btn'+p).innerText='LOST';document.getElementById('btn'+p).className='bet-btn wait';}});
- setTimeout(()=>{bets=[null,null];startWaiting();},2000);
+
+initializeProducts();
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function switchLogin(type){
+
+    document
+        .getElementById("adminTab")
+        .classList
+        .toggle(
+            "active",
+            type==="admin"
+        );
+
+    document
+        .getElementById("employeeTab")
+        .classList
+        .toggle(
+            "active",
+            type==="employee"
+        );
+
+    document
+        .getElementById("adminLogin")
+        .classList
+        .toggle(
+            "hidden",
+            type!=="admin"
+        );
+
+    document
+        .getElementById("employeeLogin")
+        .classList
+        .toggle(
+            "hidden",
+            type!=="employee"
+        );
+
+    document
+        .getElementById("adminSignup")
+        .classList
+        .add("hidden");
+
 }
-function chgAmt(p,d){amounts[p-1]+=d;if(amounts[p-1]<10)amounts[p-1]=10;document.getElementById('amt'+p).value=amounts[p-1];if(!bets[p-1])document.getElementById('btn'+p).innerText='BET '+amounts[p-1]+' KES';}
-function placeBet(p){let i=p-1;if(state==='wait'){if(bets[i])return;bets[i]={amt:amounts[i],cashed:false};document.getElementById('btn'+p).innerText='WAITING...';document.getElementById('btn'+p).className='bet-btn wait';}else if(state==='fly'&&bets[i]&&!bets[i].cashed){let win=bets[i].amt*mult;bets[i].cashed=true;document.getElementById('btn'+p).innerText='WON '+win.toFixed(2);document.getElementById('btn'+p).className='bet-btn bet';}}
+
+
+function showSignup(){
+
+    document
+        .getElementById("adminLogin")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("adminSignup")
+        .classList
+        .remove("hidden");
+
+}
+
+
+function showLogin(){
+
+    document
+        .getElementById("adminSignup")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("adminLogin")
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================================================
+   ADMIN ACCOUNT
+========================================================= */
+
+function createAdmin(){
+
+    const name=
+        document
+        .getElementById("adminName")
+        .value
+        .trim();
+
+    const email=
+        document
+        .getElementById("signupEmail")
+        .value
+        .trim();
+
+    const password=
+        document
+        .getElementById("signupPassword")
+        .value;
+
+    const password2=
+        document
+        .getElementById("signupPassword2")
+        .value;
+
+    const msg=
+        document
+        .getElementById("signupMessage");
+
+    if(!name||!email||!password){
+
+        msg.textContent=
+            "Fill all fields.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    if(password!==password2){
+
+        msg.textContent=
+            "Passwords do not match.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    saveData(
+        "voxAdmin",
+        {
+            name,
+            email,
+            password
+        }
+    );
+
+    msg.textContent=
+        "Admin account created.";
+
+    msg.style.color="green";
+
+    setTimeout(
+        showLogin,
+        700
+    );
+
+}
+
+
+function adminLogin(){
+
+    const email=
+        document
+        .getElementById("adminEmail")
+        .value
+        .trim();
+
+    const password=
+        document
+        .getElementById("adminPassword")
+        .value;
+
+    const admin=
+        getData(
+            "voxAdmin",
+            null
+        );
+
+    const msg=
+        document
+        .getElementById("adminMessage");
+
+    if(!admin){
+
+        msg.textContent=
+            "Create the admin account first.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    if(
+        email===admin.email &&
+        password===admin.password
+    ){
+
+        sessionStorage.setItem(
+            "voxSession",
+            JSON.stringify({
+                role:"admin"
+            })
+        );
+
+        openAdmin();
+
+    }else{
+
+        msg.textContent=
+            "Incorrect email or password.";
+
+        msg.style.color="red";
+
+    }
+
+}
+
+
+/* =========================================================
+   EMPLOYEE
+========================================================= */
+
+function addEmployee(){
+
+    const name=
+        document
+        .getElementById("employeeName")
+        .value
+        .trim();
+
+    const username=
+        document
+        .getElementById("newUsername")
+        .value
+        .trim();
+
+    const password=
+        document
+        .getElementById("newPassword")
+        .value;
+
+    const msg=
+        document
+        .getElementById(
+            "employeeCreateMessage"
+        );
+
+    if(!name||!username||!password){
+
+        msg.textContent=
+            "Fill all fields.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    let employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    if(
+        employees.some(
+            e=>e.username===username
+        )
+    ){
+
+        msg.textContent=
+            "Username already exists.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    employees.push({
+
+        id:Date.now(),
+
+        name,
+
+        username,
+
+        password
+
+    });
+
+    saveData(
+        "voxEmployees",
+        employees
+    );
+
+    document.getElementById(
+        "employeeName"
+    ).value="";
+
+    document.getElementById(
+        "newUsername"
+    ).value="";
+
+    document.getElementById(
+        "newPassword"
+    ).value="";
+
+    msg.textContent=
+        "Employee created successfully.";
+
+    msg.style.color="green";
+
+    updateAdmin();
+
+}
+
+
+function employeeLogin(){
+
+    const username=
+        document
+        .getElementById(
+            "employeeUsername"
+        )
+        .value
+        .trim();
+
+    const password=
+        document
+        .getElementById(
+            "employeePassword"
+        )
+        .value;
+
+    const employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    const employee=
+        employees.find(
+            e=>
+            e.username===username &&
+            e.password===password
+        );
+
+    const msg=
+        document
+        .getElementById(
+            "employeeMessage"
+        );
+
+    if(!employee){
+
+        msg.textContent=
+            "Incorrect username or password.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    sessionStorage.setItem(
+        "voxSession",
+        JSON.stringify({
+
+            role:"employee",
+
+            employeeId:
+                employee.id
+
+        })
+    );
+
+    openEmployee();
+
+}
+
+
+/* =========================================================
+   DASHBOARDS
+========================================================= */
+
+function openAdmin(){
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("employeeDashboard")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("adminDashboard")
+        .classList
+        .remove("hidden");
+
+    const admin=
+        getData(
+            "voxAdmin",
+            {
+                name:"Admin"
+            }
+        );
+
+    document
+        .getElementById("adminUser")
+        .textContent=
+        admin.name;
+
+    document
+        .getElementById("storeNameInput")
+        .value=
+        localStorage.getItem(
+            "voxStoreName"
+        )||"MY STORE";
+
+    updateAdmin();
+
+}
+
+
+function openEmployee(){
+
+    document
+        .getElementById("loginScreen")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("adminDashboard")
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById("employeeDashboard")
+        .classList
+        .remove("hidden");
+
+    const session=
+        JSON.parse(
+            sessionStorage.getItem(
+                "voxSession"
+            )
+        );
+
+    const employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    const employee=
+        employees.find(
+            e=>e.id===session.employeeId
+        );
+
+    document
+        .getElementById("employeeUser")
+        .textContent=
+        employee
+        ?employee.name
+        :"Employee";
+
+    cart=[];
+
+    selectedPayment="Cash";
+
+    selectedCategory="All";
+
+    renderCategories();
+
+    renderPOSProducts();
+
+    renderCart();
+
+    setTimeout(
+        focusBarcode,
+        300
+    );
+
+}
+
+
+/* =========================================================
+   STORE SETTINGS
+========================================================= */
+
+function saveStoreSettings(){
+
+    const input=
+        document
+        .getElementById(
+            "storeNameInput"
+        );
+
+    const name=
+        input.value.trim();
+
+    const msg=
+        document
+        .getElementById(
+            "storeMessage"
+        );
+
+    if(!name){
+
+        msg.textContent=
+            "Enter a store name.";
+
+        msg.style.color="red";
+
+        return;
+
+    }
+
+    localStorage.setItem(
+        "voxStoreName",
+        name
+    );
+
+    msg.textContent=
+        "Store name saved successfully.";
+
+    msg.style.color="green";
+
+}
+
+
+/* =========================================================
+   ADMIN NAVIGATION
+========================================================= */
+
+function adminPage(page,button){
+
+    document
+        .querySelectorAll(
+            ".admin-content > div"
+        )
+        .forEach(
+            x=>x.classList.add("hidden")
+        );
+
+    document
+        .getElementById(
+            page+"Page"
+        )
+        .classList
+        .remove("hidden");
+
+    document
+        .querySelectorAll(
+            ".sidebar button"
+        )
+        .forEach(
+            x=>x.classList.remove("active")
+        );
+
+    button.classList.add("active");
+
+    if(page==="settings"){
+
+        document
+            .getElementById(
+                "storeNameInput"
+            )
+            .value=
+            localStorage.getItem(
+                "voxStoreName"
+            )||"MY STORE";
+
+    }
+
+}
+
+
+/* =========================================================
+   ADMIN DATA
+========================================================= */
+
+function updateAdmin(){
+
+    const employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const sales=
+        getData(
+            "voxSales",
+            []
+        );
+
+    const revenue=
+        sales.reduce(
+            (sum,s)=>sum+s.total,
+            0
+        );
+
+    document
+        .getElementById(
+            "employeeCount"
+        )
+        .textContent=
+        employees.length;
+
+    document
+        .getElementById(
+            "productCount"
+        )
+        .textContent=
+        products.length;
+
+    document
+        .getElementById(
+            "saleCount"
+        )
+        .textContent=
+        sales.length;
+
+    document
+        .getElementById(
+            "revenue"
+        )
+        .textContent=
+        "KSh "+
+        revenue.toLocaleString();
+
+    document
+        .getElementById(
+            "reportTransactions"
+        )
+        .textContent=
+        sales.length;
+
+    document
+        .getElementById(
+            "reportRevenue"
+        )
+        .textContent=
+        "KSh "+
+        revenue.toLocaleString();
+
+    renderEmployees();
+
+    renderProductsAdmin();
+
+    renderSales();
+
+    renderRecentSales();
+
+    renderReports();
+
+}
+
+
+/* =========================================================
+   EMPLOYEE TABLE
+========================================================= */
+
+function employeeName(id){
+
+    const employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    const employee=
+        employees.find(
+            e=>e.id===id
+        );
+
+    return employee
+        ?employee.name
+        :"Unknown";
+
+}
+
+
+function renderEmployees(){
+
+    const employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    const sales=
+        getData(
+            "voxSales",
+            []
+        );
+
+    const table=
+        document
+        .getElementById(
+            "employeesTable"
+        );
+
+    table.innerHTML="";
+
+    employees.forEach(e=>{
+
+        const mine=
+            sales.filter(
+                s=>s.employeeId===e.id
+            );
+
+        table.innerHTML+=`
+
+        <tr>
+
+        <td>${safe(e.name)}</td>
+
+        <td>${safe(e.username)}</td>
+
+        <td>${mine.length}</td>
+
+        <td>
+
+        <button
+        class="small-btn delete-btn"
+        onclick="deleteEmployee(${e.id})">
+
+        Delete
+
+        </button>
+
+        </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+function deleteEmployee(id){
+
+    if(
+        !confirm(
+            "Delete employee?"
+        )
+    ){
+        return;
+    }
+
+    let employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    employees=
+        employees.filter(
+            e=>e.id!==id
+        );
+
+    saveData(
+        "voxEmployees",
+        employees
+    );
+
+    updateAdmin();
+
+}
+
+
+/* =========================================================
+   ADD PRODUCT
+========================================================= */
+
+function addProduct(){
+
+    const name=
+        document
+        .getElementById(
+            "newProductName"
+        )
+        .value
+        .trim();
+
+    const barcode=
+        document
+        .getElementById(
+            "newProductBarcode"
+        )
+        .value
+        .trim();
+
+    const category=
+        document
+        .getElementById(
+            "newProductCategory"
+        )
+        .value
+        .trim();
+
+    const price=
+        Number(
+            document
+            .getElementById(
+                "newProductPrice"
+            )
+            .value
+        );
+
+    const stock=
+        Number(
+            document
+            .getElementById(
+                "newProductStock"
+            )
+            .value
+        );
+
+    if(
+        !name||
+        !barcode||
+        !category||
+        price<=0||
+        stock<0
+    ){
+
+        alert(
+            "Enter valid product details."
+        );
+
+        return;
+
+    }
+
+    let products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    if(
+        products.some(
+            p=>p.barcode===barcode
+        )
+    ){
+
+        alert(
+            "That barcode already exists."
+        );
+
+        return;
+
+    }
+
+    products.push({
+
+        id:Date.now(),
+
+        name,
+
+        barcode,
+
+        category,
+
+        price,
+
+        stock
+
+    });
+
+    saveData(
+        "voxProducts",
+        products
+    );
+
+    document
+        .getElementById(
+            "newProductName"
+        )
+        .value="";
+
+    document
+        .getElementById(
+            "newProductBarcode"
+        )
+        .value="";
+
+    document
+        .getElementById(
+            "newProductCategory"
+        )
+        .value="";
+
+    document
+        .getElementById(
+            "newProductPrice"
+        )
+        .value="";
+
+    document
+        .getElementById(
+            "newProductStock"
+        )
+        .value="";
+
+    updateAdmin();
+
+    renderCategories();
+
+    renderPOSProducts();
+
+}
+
+
+/* =========================================================
+   PRODUCTS TABLE
+========================================================= */
+
+function renderProductsAdmin(){
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const table=
+        document
+        .getElementById(
+            "productsTable"
+        );
+
+    table.innerHTML="";
+
+    products.forEach(p=>{
+
+        table.innerHTML+=`
+
+        <tr>
+
+        <td>
+        ${safe(p.name)}
+        </td>
+
+        <td>
+        ${safe(p.barcode || "-")}
+        </td>
+
+        <td>
+        ${safe(p.category)}
+        </td>
+
+        <td>
+        KSh ${p.price.toLocaleString()}
+        </td>
+
+        <td>
+        ${p.stock}
+        </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   SALES
+========================================================= */
+
+function renderSales(){
+
+    const sales=
+        getData(
+            "voxSales",
+            []
+        );
+
+    const table=
+        document
+        .getElementById(
+            "salesTable"
+        );
+
+    table.innerHTML="";
+
+    sales
+        .slice()
+        .reverse()
+        .forEach(s=>{
+
+            table.innerHTML+=`
+
+            <tr>
+
+            <td>
+            ${safe(s.receipt)}
+            </td>
+
+            <td>
+            ${safe(
+                employeeName(
+                    s.employeeId
+                )
+            )}
+            </td>
+
+            <td>
+            ${safe(s.payment)}
+            </td>
+
+            <td>
+            KSh ${s.total.toLocaleString()}
+            </td>
+
+            <td>
+            ${safe(s.date)}
+            </td>
+
+            </tr>
+
+            `;
+
+        });
+
+}
+
+
+function renderRecentSales(){
+
+    const sales=
+        getData(
+            "voxSales",
+            []
+        );
+
+    const table=
+        document
+        .getElementById(
+            "recentSales"
+        );
+
+    table.innerHTML="";
+
+    sales
+        .slice(-10)
+        .reverse()
+        .forEach(s=>{
+
+            table.innerHTML+=`
+
+            <tr>
+
+            <td>
+            ${safe(
+                employeeName(
+                    s.employeeId
+                )
+            )}
+            </td>
+
+            <td>
+            ${safe(s.payment)}
+            </td>
+
+            <td>
+            KSh ${s.total.toLocaleString()}
+            </td>
+
+            <td>
+            ${safe(s.date)}
+            </td>
+
+            </tr>
+
+            `;
+
+        });
+
+}
+
+
+function renderReports(){
+
+    const employees=
+        getData(
+            "voxEmployees",
+            []
+        );
+
+    const sales=
+        getData(
+            "voxSales",
+            []
+        );
+
+    const table=
+        document
+        .getElementById(
+            "reportTable"
+        );
+
+    table.innerHTML="";
+
+    employees.forEach(e=>{
+
+        const mine=
+            sales.filter(
+                s=>s.employeeId===e.id
+            );
+
+        const revenue=
+            mine.reduce(
+                (sum,s)=>sum+s.total,
+                0
+            );
+
+        table.innerHTML+=`
+
+        <tr>
+
+        <td>
+        ${safe(e.name)}
+        </td>
+
+        <td>
+        ${mine.length}
+        </td>
+
+        <td>
+        KSh ${revenue.toLocaleString()}
+        </td>
+
+        </tr>
+
+        `;
+
+    });
+
+}
+
+
+/* =========================================================
+   POS VARIABLES
+========================================================= */
+
+let cart=[];
+
+let selectedPayment="Cash";
+
+let selectedCategory="All";
+
+
+/* =========================================================
+   CATEGORIES
+========================================================= */
+
+function renderCategories(){
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const categories=[
+        "All",
+        ...new Set(
+            products.map(
+                p=>p.category
+            )
+        )
+    ];
+
+    const box=
+        document
+        .getElementById(
+            "categories"
+        );
+
+    box.innerHTML="";
+
+    categories.forEach(
+        category=>{
+
+            const btn=
+                document.createElement(
+                    "button"
+                );
+
+            btn.className=
+                "category-btn"+
+                (
+                    category===
+                    selectedCategory
+                    ?" active"
+                    :""
+                );
+
+            btn.textContent=
+                category;
+
+            btn.onclick=()=>{
+
+                selectedCategory=
+                    category;
+
+                renderCategories();
+
+                renderPOSProducts();
+
+            };
+
+            box.appendChild(btn);
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   POS PRODUCTS
+========================================================= */
+
+function renderPOSProducts(){
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const searchInput=
+        document.getElementById(
+            "searchInput"
+        );
+
+    const search=
+        searchInput
+        ?searchInput.value
+            .toLowerCase()
+            .trim()
+        :"";
+
+    const box=
+        document
+        .getElementById(
+            "posProducts"
+        );
+
+    box.innerHTML="";
+
+    const filtered=
+        products.filter(p=>{
+
+            return(
+
+                (
+                    p.name
+                    .toLowerCase()
+                    .includes(search)
+
+                    ||
+
+                    String(
+                        p.barcode||""
+                    )
+                    .includes(search)
+                )
+
+                &&
+
+                (
+                    selectedCategory===
+                    "All"
+
+                    ||
+
+                    p.category===
+                    selectedCategory
+                )
+
+            );
+
+        });
+
+    filtered.forEach(p=>{
+
+        const card=
+            document.createElement(
+                "div"
+            );
+
+        card.className=
+            "product-card";
+
+        card.innerHTML=`
+
+        <div class="product-name">
+        ${safe(p.name)}
+        </div>
+
+        <div class="product-category">
+        ${safe(p.category)}
+        </div>
+
+        <div class="product-price">
+        KSh ${p.price.toLocaleString()}
+        </div>
+
+        <div class="product-barcode">
+        Barcode: ${safe(p.barcode||"-")}
+        </div>
+
+        <div class="stock">
+        Stock: ${p.stock}
+        </div>
+
+        `;
+
+        const button=
+            document.createElement(
+                "button"
+            );
+
+        button.className=
+            "add-product";
+
+        button.textContent=
+            p.stock>0
+            ?"ADD TO CART"
+            :"OUT OF STOCK";
+
+        button.disabled=
+            p.stock<=0;
+
+        button.onclick=()=>{
+
+            addToCart(p.id);
+
+        };
+
+        card.appendChild(button);
+
+        box.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   BARCODE SCANNER
+========================================================= */
+
+function focusBarcode(){
+
+    const input=
+        document.getElementById(
+            "barcodeInput"
+        );
+
+    if(input){
+
+        input.focus();
+
+    }
+
+}
+
+
+/*
+   Most USB and Bluetooth barcode scanners
+   act like a keyboard.
+
+   When the scanner sends the barcode and
+   presses ENTER, this function runs.
+*/
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        const barcodeInput=
+            document.getElementById(
+                "barcodeInput"
+            );
+
+        if(barcodeInput){
+
+            barcodeInput.addEventListener(
+                "keydown",
+                function(event){
+
+                    if(
+                        event.key==="Enter"
+                    ){
+
+                        event.preventDefault();
+
+                        scanBarcode();
+
+                    }
+
+                }
+            );
+
+        }
+
+    }
+);
+
+
+function scanBarcode(){
+
+    const input=
+        document.getElementById(
+            "barcodeInput"
+        );
+
+    const barcode=
+        input.value.trim();
+
+    if(!barcode){
+
+        input.focus();
+
+        return;
+
+    }
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const product=
+        products.find(
+            p=>
+            String(p.barcode)
+            ===String(barcode)
+        );
+
+    if(!product){
+
+        alert(
+            "Product not found for barcode: "+
+            barcode
+        );
+
+        input.select();
+
+        return;
+
+    }
+
+    if(product.stock<=0){
+
+        alert(
+            "This product is out of stock."
+        );
+
+        input.select();
+
+        return;
+
+    }
+
+    addToCart(
+        product.id
+    );
+
+    input.value="";
+
+    input.focus();
+
+}
+
+
+/* =========================================================
+   CART
+========================================================= */
+
+function addToCart(id){
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const product=
+        products.find(
+            p=>p.id===id
+        );
+
+    if(
+        !product||
+        product.stock<=0
+    ){
+
+        return;
+
+    }
+
+    const existing=
+        cart.find(
+            x=>x.id===id
+        );
+
+    if(existing){
+
+        if(
+            existing.qty>=
+            product.stock
+        ){
+
+            alert(
+                "Maximum stock reached."
+            );
+
+            return;
+
+        }
+
+        existing.qty++;
+
+    }else{
+
+        cart.push({
+
+            id:product.id,
+
+            name:product.name,
+
+            price:product.price,
+
+            qty:1
+
+        });
+
+    }
+
+    renderCart();
+
+}
+
+
+function changeQuantity(
+    id,
+    amount
+){
+
+    const item=
+        cart.find(
+            x=>x.id===id
+        );
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    const product=
+        products.find(
+            p=>p.id===id
+        );
+
+    if(!item||!product){
+
+        return;
+
+    }
+
+    item.qty+=amount;
+
+    if(item.qty<=0){
+
+        cart=
+            cart.filter(
+                x=>x.id!==id
+            );
+
+    }
+
+    if(
+        item.qty>
+        product.stock
+    ){
+
+        item.qty=
+            product.stock;
+
+    }
+
+    renderCart();
+
+}
+
+
+function removeFromCart(id){
+
+    cart=
+        cart.filter(
+            x=>x.id!==id
+        );
+
+    renderCart();
+
+}
+
+
+function renderCart(){
+
+    const box=
+        document
+        .getElementById(
+            "cartList"
+        );
+
+    box.innerHTML="";
+
+    if(cart.length===0){
+
+        box.innerHTML=`
+
+        <div class="empty-cart">
+
+        🛒
+
+        <br><br>
+
+        Cart is empty
+
+        </div>
+
+        `;
+
+        document
+            .getElementById(
+                "total"
+            )
+            .textContent=
+            "KSh 0";
+
+        document
+            .getElementById(
+                "cartCount"
+            )
+            .textContent=
+            "0 items";
+
+        return;
+
+    }
+
+    let total=0;
+
+    let count=0;
+
+    cart.forEach(item=>{
+
+        const amount=
+            item.price*
+            item.qty;
+
+        total+=amount;
+
+        count+=item.qty;
+
+        box.innerHTML+=`
+
+        <div class="cart-item">
+
+        <div class="cart-item-top">
+
+        <span>
+        ${safe(item.name)}
+        </span>
+
+        <span>
+        KSh ${amount.toLocaleString()}
+        </span>
+
+        </div>
+
+        <div class="qty-row">
+
+        <button
+        class="qty-btn"
+        onclick="changeQuantity(${item.id},-1)">
+        −
+        </button>
+
+        <strong>
+        ${item.qty}
+        </strong>
+
+        <button
+        class="qty-btn"
+        onclick="changeQuantity(${item.id},1)">
+        +
+        </button>
+
+        <button
+        class="remove-btn"
+        onclick="removeFromCart(${item.id})">
+        Remove
+        </button>
+
+        </div>
+
+        </div>
+
+        `;
+
+    });
+
+    document
+        .getElementById(
+            "total"
+        )
+        .textContent=
+        "KSh "+
+        total.toLocaleString();
+
+    document
+        .getElementById(
+            "cartCount"
+        )
+        .textContent=
+        count+
+        (
+            count===1
+            ?" item"
+            :" items"
+        );
+
+}
+
+
+/* =========================================================
+   PAYMENT
+========================================================= */
+
+function selectPayment(method){
+
+    selectedPayment=method;
+
+    document
+        .getElementById(
+            "cashBtn"
+        )
+        .classList
+        .toggle(
+            "active",
+            method==="Cash"
+        );
+
+    document
+        .getElementById(
+            "mpesaBtn"
+        )
+        .classList
+        .toggle(
+            "active",
+            method==="M-Pesa"
+        );
+
+    document
+        .getElementById(
+            "cardBtn"
+        )
+        .classList
+        .toggle(
+            "active",
+            method==="Card"
+        );
+
+    const extra=
+        document
+        .getElementById(
+            "paymentExtra"
+        );
+
+    if(method==="M-Pesa"){
+
+        extra.innerHTML=`
+
+        <input
+        id="mpesaReference"
+        placeholder="Enter M-Pesa code">
+
+        `;
+
+    }else if(method==="Card"){
+
+        extra.innerHTML=`
+
+        <input
+        id="cardReference"
+        placeholder="Enter card reference">
+
+        `;
+
+    }else{
+
+        extra.innerHTML="";
+
+    }
+
+}
+
+
+/* =========================================================
+   COMPLETE SALE
+========================================================= */
+
+function completeSale(){
+
+    if(cart.length===0){
+
+        alert(
+            "Please add products to the cart first."
+        );
+
+        return;
+
+    }
+
+    if(
+        selectedPayment==="M-Pesa"
+    ){
+
+        const ref=
+            document.getElementById(
+                "mpesaReference"
+            );
+
+        if(
+            !ref||
+            !ref.value.trim()
+        ){
+
+            alert(
+                "Enter the M-Pesa code."
+            );
+
+            return;
+
+        }
+
+    }
+
+    if(
+        selectedPayment==="Card"
+    ){
+
+        const ref=
+            document.getElementById(
+                "cardReference"
+            );
+
+        if(
+            !ref||
+            !ref.value.trim()
+        ){
+
+            alert(
+                "Enter the card reference."
+            );
+
+            return;
+
+        }
+
+    }
+
+    const products=
+        getData(
+            "voxProducts",
+            []
+        );
+
+    let total=0;
+
+    for(
+        const item of cart
+    ){
+
+        const product=
+            products.find(
+                p=>p.id===item.id
+            );
+
+        if(
+            !product||
+            product.stock<
+            item.qty
+        ){
+
+            alert(
+                "Not enough stock for "+
+                item.name
+            );
+
+            return;
+
+        }
+
+        total+=
+            item.price*
+            item.qty;
+
+    }
+
+    const session=
+        JSON.parse(
+            sessionStorage.getItem(
+                "voxSession"
+            )
+        );
+
+    const sale={
+
+        receipt:
+            "VC-"+Date.now(),
+
+        employeeId:
+            session.employeeId,
+
+        items:
+            cart.map(
+                x=>({...x})
+            ),
+
+        total,
+
+        payment:
+            selectedPayment,
+
+        date:
+            new Date()
+            .toLocaleString()
+
+    };
+
+    cart.forEach(item=>{
+
+        const product=
+            products.find(
+                p=>p.id===item.id
+            );
+
+        product.stock-=
+            item.qty;
+
+    });
+
+    saveData(
+        "voxProducts",
+        products
+    );
+
+    let sales=
+        getData(
+            "voxSales",
+            []
+        );
+
+    sales.push(sale);
+
+    saveData(
+        "voxSales",
+        sales
+    );
+
+    showReceipt(sale);
+
+    cart=[];
+
+    renderCart();
+
+    renderPOSProducts();
+
+    updateAdmin();
+
+}
+
+
+/* =========================================================
+   RECEIPT
+========================================================= */
+
+function showReceipt(sale){
+
+    const storeName=
+        localStorage.getItem(
+            "voxStoreName"
+        )||"MY STORE";
+
+    document
+        .getElementById(
+            "receiptStoreName"
+        )
+        .textContent=
+        storeName;
+
+    document
+        .getElementById(
+            "receiptNo"
+        )
+        .textContent=
+        "Receipt: "+
+        sale.receipt;
+
+    document
+        .getElementById(
+            "receiptDate"
+        )
+        .textContent=
+        sale.date;
+
+    const items=
+        document
+        .getElementById(
+            "receiptItems"
+        );
+
+    items.innerHTML="";
+
+    sale.items.forEach(item=>{
+
+        items.innerHTML+=`
+
+        <div class="receipt-line">
+
+        <span>
+        ${safe(item.name)}
+        x${item.qty}
+        </span>
+
+        <span>
+        KSh ${
+            (
+                item.price*
+                item.qty
+            )
+            .toLocaleString()
+        }
+        </span>
+
+        </div>
+
+        `;
+
+    });
+
+    document
+        .getElementById(
+            "receiptAmount"
+        )
+        .textContent=
+        "KSh "+
+        sale.total.toLocaleString();
+
+    document
+        .getElementById(
+            "receiptMethod"
+        )
+        .textContent=
+        sale.payment;
+
+    document
+        .getElementById(
+            "receiptModal"
+        )
+        .classList
+        .remove("hidden");
+
+}
+
+
+function closeReceipt(){
+
+    document
+        .getElementById(
+            "receiptModal"
+        )
+        .classList
+        .add("hidden");
+
+}
+
+
+/* =========================================================
+   PRINT RECEIPT
+========================================================= */
+
+function printReceipt(){
+
+    const storeName=
+        localStorage.getItem(
+            "voxStoreName"
+        )||"MY STORE";
+
+    const receiptNo=
+        document
+        .getElementById(
+            "receiptNo"
+        )
+        .textContent;
+
+    const receiptDate=
+        document
+        .getElementById(
+            "receiptDate"
+        )
+        .textContent;
+
+    const items=
+        document
+        .getElementById(
+            "receiptItems"
+        )
+        .innerHTML;
+
+    const amount=
+        document
+        .getElementById(
+            "receiptAmount"
+        )
+        .textContent;
+
+    const payment=
+        document
+        .getElementById(
+            "receiptMethod"
+        )
+        .textContent;
+
+    const printWindow=
+        window.open(
+            "",
+            "_blank"
+        );
+
+    if(!printWindow){
+
+        alert(
+            "Allow pop-ups in your browser to print."
+        );
+
+        return;
+
+    }
+
+    printWindow.document.write(`
+
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Receipt</title>
+
+<style>
+
+@page{
+    size:80mm auto;
+    margin:0;
+}
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    width:80mm;
+    margin:0;
+    padding:5mm;
+    font-family:Arial,sans-serif;
+    color:#000;
+    font-size:12px;
+}
+
+.store{
+    text-align:center;
+    font-size:20px;
+    font-weight:bold;
+    margin-bottom:4px;
+}
+
+.powered{
+    text-align:center;
+    font-size:9px;
+    margin-bottom:10px;
+}
+
+.center{
+    text-align:center;
+}
+
+hr{
+    border:0;
+    border-top:1px solid #000;
+}
+
+.line{
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    padding:4px 0;
+}
+
+.total{
+    border-top:1px solid #000;
+    margin-top:8px;
+    padding-top:8px;
+    font-weight:bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="store">
+${safe(storeName)}
+</div>
+
+<div class="powered">
+Powered by VOX CODE POS
+</div>
+
+<hr>
+
+<div class="center">
+
+<strong>
+SALES RECEIPT
+</strong>
+
+<br>
+
+${safe(receiptNo)}
+
+<br>
+
+${safe(receiptDate)}
+
+</div>
+
+<br>
+
+${items}
+
+<div class="total">
+
+<div class="line">
+
+<span>
+Total
+</span>
+
+<span>
+${safe(amount)}
+</span>
+
+</div>
+
+<div class="line">
+
+<span>
+Payment
+</span>
+
+<span>
+${safe(payment)}
+</span>
+
+</div>
+
+</div>
+
+<br>
+
+<div class="center">
+
+Thank you for shopping with us!
+
+</div>
+
+
+<script>
+
+window.onload=function(){
+
+    setTimeout(
+        function(){
+
+            window.print();
+
+        },
+        500
+    );
+
+};
+
+<\/script>
+
+</body>
+
+</html>
+
+`);
+
+    printWindow.document.close();
+
+}
+
+
+/* =========================================================
+   TEST PRINTER
+========================================================= */
+
+function testPrint(){
+
+    const storeName=
+        localStorage.getItem(
+            "voxStoreName"
+        )||"MY STORE";
+
+    const printWindow=
+        window.open(
+            "",
+            "_blank"
+        );
+
+    if(!printWindow){
+
+        alert(
+            "Allow pop-ups in your browser to print."
+        );
+
+        return;
+
+    }
+
+    printWindow.document.write(`
+
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+    <meta charset="UTF-8">
+
+    <style>
+
+    @page{
+        size:80mm auto;
+        margin:0;
+    }
+
+    body{
+        width:80mm;
+        padding:5mm;
+        text-align:center;
+        font-family:Arial;
+    }
+
+    h2{
+        margin-bottom:5px;
+    }
+
+    </style>
+
+    </head>
+
+    <body>
+
+    <h2>
+    ${safe(storeName)}
+    </h2>
+
+    <strong>
+    PRINTER TEST
+    </strong>
+
+    <p>
+    VOX CODE POS
+    </p>
+
+    <p>
+    Printer is ready for testing.
+    </p>
+
+    <script>
+
+    window.onload=function(){
+
+        setTimeout(
+            function(){
+                window.print();
+            },
+            500
+        );
+
+    };
+
+    <\/script>
+
+    </body>
+
+    </html>
+
+    `);
+
+    printWindow.document.close();
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "voxSession"
+    );
+
+    cart=[];
+
+    document
+        .getElementById(
+            "adminDashboard"
+        )
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById(
+            "employeeDashboard"
+        )
+        .classList
+        .add("hidden");
+
+    document
+        .getElementById(
+            "loginScreen"
+        )
+        .classList
+        .remove("hidden");
+
+}
+
+
+/* =========================================================
+   SAFE TEXT
+========================================================= */
+
+function safe(value){
+
+    return String(value)
+
+        .replaceAll(
+            "&",
+            "&amp;"
+        )
+
+        .replaceAll(
+            "<",
+            "&lt;"
+        )
+
+        .replaceAll(
+            ">",
+            "&gt;"
+        )
+
+        .replaceAll(
+            '"',
+            "&quot;"
+        )
+
+        .replaceAll(
+            "'",
+            "&#039;"
+        );
+
+}
+
 </script>
+
 </body>
 </html>
